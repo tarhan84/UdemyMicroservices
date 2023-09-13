@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Dtos
 {
-    internal class ResponseDto<T>
+    public class ResponseDto<T>
     {
         public T Data { get; private set; }
 
