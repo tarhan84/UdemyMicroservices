@@ -1,3 +1,4 @@
+using CatalogAPI.Services;
 using CatalogAPI.Settings;
 using Microsoft.Extensions.Options;
 
@@ -15,6 +16,9 @@ builder.Services.AddSingleton<IDatabaseSettings>(sp =>
 {
     return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 });
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+
 
 var app = builder.Build();
 
