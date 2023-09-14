@@ -36,12 +36,5 @@ namespace CatalogAPI.Controllers
             var result = await _categoryService.CreateAsync(category);
             return CreateActionResult(result);
         }
-
-        [HttpPut("update")]
-        public async Task<IActionResult> Create(CategoryUpdateDto category)
-        {
-            var result = await _categoryService.Up(category);
-            return CreateActionResult(result);
-        }
     }
 }

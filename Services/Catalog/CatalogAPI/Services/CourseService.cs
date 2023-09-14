@@ -14,11 +14,7 @@ namespace CatalogAPI.Services
         private readonly IMapper _mapper;
         private readonly ILogger<CourseService> _logger;
 
-        public CourseService(IMongoCollection<Category> courseCollection, 
-            IMapper mapper,
-            IDatabaseSettings databaseSettings,
-            ICategoryService categoryService,
-            ILogger<CourseService> logger)
+        public CourseService(IMapper mapper, IDatabaseSettings databaseSettings, ICategoryService categoryService, ILogger<CourseService> logger)
         {
             _mapper = mapper;
 

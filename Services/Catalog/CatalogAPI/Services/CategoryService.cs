@@ -12,7 +12,7 @@ namespace CatalogAPI.Services
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
-        public CategoryService(IMongoCollection<Category> categoryCollection, IMapper mapper, IDatabaseSettings databaseSettings)
+        public CategoryService(IMapper mapper, IDatabaseSettings databaseSettings)
         {
             _mapper = mapper;
 

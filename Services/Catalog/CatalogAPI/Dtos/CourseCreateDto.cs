@@ -16,6 +16,5 @@
 
         public string CategoryId { get; set; }
 
-        public CategoryDto Category { get; set; }
     }
 }
