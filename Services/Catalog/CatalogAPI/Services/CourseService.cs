@@ -83,7 +83,7 @@ namespace CatalogAPI.Services
 
         public async Task<Response<NoContent>> DeleteByIdAsync(string id)
         {
-            var result = await _courseCollection.DeleteOneAsync(id);
+            var result = await _courseCollection.DeleteOneAsync(course => course.Id == id);
             if (result.DeletedCount > 0)
                 return Response<NoContent>.Success(204);
             return Response<NoContent>.Fail($"Course not found with Id : {id}", 404);

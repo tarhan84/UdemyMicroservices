@@ -20,8 +20,6 @@ namespace CatalogAPI.Dtos
 
         public FeatureDto Feature { get; set; }
 
-        public string CategoryId { get; set; }
-
         public CategoryDto Category { get; set; }
     }
 }
