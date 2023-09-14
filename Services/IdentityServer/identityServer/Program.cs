@@ -2,14 +2,20 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using identityServer.Data;
+using identityServer.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using System.Linq;
 
-namespace IdentityServer
+namespace identityServer
 {
     public class Program
     {
@@ -34,6 +40,18 @@ namespace IdentityServer
             try
             {
                 var host = CreateHostBuilder(args).Build();
+
+                using(var scope = host.Services.CreateScope())
+                {
+                    var serviceProvider = scope.ServiceProvider;
+                    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+                    dbContext.Database.Migrate();
+                    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    if (!userManager.Users.Any())
+                    {
+                        userManager.CreateAsync(new ApplicationUser {UserName = "tarhan", Email = "tarhan.werek@gmail.com"}, "testUser2121**").Wait();
+                    }
+                }
                 
                 Log.Information("Starting host...");
                 host.Run();

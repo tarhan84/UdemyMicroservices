@@ -6,8 +6,8 @@ using IdentityExpress.Identity;
 using IdentityExpress.Manager.Api;
 using IdentityServer4;
 using IdentityServer4.Configuration;
-using IdentityServer.Data;
-using IdentityServer.Models;
+using identityServer.Data;
+using identityServer.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 
-namespace IdentityServer
+namespace identityServer
 {
     public class Startup
     {
@@ -49,13 +49,13 @@ namespace IdentityServer
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("Users")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            var connectionString = Configuration.GetConnectionString("Configuration");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             var builder = services.AddIdentityServer(options =>
@@ -77,14 +77,14 @@ namespace IdentityServer
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = db =>
-                        db.UseSqlite(connectionString,
+                        db.UseSqlServer(connectionString,
                             sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = db =>
-                        db.UseSqlite(connectionString,
+                        db.UseSqlServer(connectionString,
                             sql => sql.MigrationsAssembly(migrationsAssembly));
 
                     // this enables automatic token cleanup. this is optional.
@@ -128,7 +128,7 @@ namespace IdentityServer
             app.UseIdentityServer();
             app.UseAuthorization();
 
-            app.UseAdminUI();
+            //app.UseAdminUI();
 
             app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
